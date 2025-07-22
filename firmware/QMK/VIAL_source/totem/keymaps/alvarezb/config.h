@@ -10,8 +10,9 @@ for more options.
 // #define MASTER_RIGHT // USB cable on right
 #define EE_HANDS //Flash eeprom on each side (use -bl compile arg)
 
-//#define TAPPING_TERM 170
-#define TAPPING_TERM 170
+#define TAPPING_TERM 200
+#define FLOW_TAP_TERM 150
+
 
 // Auto Shift
 #define NO_AUTO_SHIFT_ALPHA
