@@ -76,11 +76,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       │ l o w e r                                       │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-        ╌┄┈┈───═╡ CTL+TAB │  CMD+W  │    ↑    │    =    │    {    ││    }    │    7    │    8    │    9    │    +    │
+        ╌┄┈┈───═╡ CTL+TAB │  CMD+W  │    ↑    │ LSG+TAB │    {    ││    }    │    7    │    8    │    9    │    +    │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │ LCS+TAB │    ←    │    ↓    │    →    │    [    ││    ]    │    4    │    5    │    6    │    -    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │         │         │   CUT   │  COPY   │  PASTE  │    (    ││    )    │    1    │    2    │    3    │    *    │         │
+      │         │         │   CUT   │  COPY   │  PASTE  │    (    ││    )    │    1    │    2    │    3    │    *    │    =    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    0    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -88,9 +88,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_LOWER] = LAYOUT(
-                 LCTL(KC_TAB), LGUI(KC_W), KC_UP,      KC_EQL,     KC_LCBR,    KC_RCBR, KC_P7,         KC_P8,         KC_P9,         KC_PPLS,
+                 LCTL(KC_TAB), LGUI(KC_W), KC_UP,      LSG(KC_T),  KC_LCBR,    KC_RCBR, KC_P7,         KC_P8,         KC_P9,         KC_PPLS,
                  LCS(KC_TAB),  KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_LBRC,    KC_RBRC, LSFT_T(KC_P4), LGUI_T(KC_P5), LALT_T(KC_P6), LCTL_T(KC_MINS),
-        XXXXXXX, XXXXXXX,      LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_LPRN,    KC_RPRN, KC_P1,         KC_P2,         KC_P3,         KC_PAST, XXXXXXX,
+        XXXXXXX, XXXXXXX,      LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_LPRN,    KC_RPRN, KC_P1,         KC_P2,         KC_P3,         KC_PAST,         KC_EQL,
                                         LT(4, _______),_______,    _______,    _______, _______,       LT(4, KC_P0)
     ),
     /*
