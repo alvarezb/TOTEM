@@ -81,7 +81,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │ CTL+TAB │    ←    │    ↓    │    →    │    [    ││    ]    │    4    │    5    │    6    │    -    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │         │         │   CUT   │  COPY   │  PASTE  │    (    ││    )    │    1    │    2    │    3    │    *    │    =    │
+      │         │         │         │ LGUI+[  │ LGUI+]  │    (    ││    )    │    1    │    2    │    3    │    *    │    =    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    0    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -89,10 +89,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_LOWER] = LAYOUT(
-                 LCS(KC_TAB),  LGUI(KC_W), KC_UP,      LSG(KC_T),  KC_LCBR,    KC_RCBR, KC_P7,         KC_P8,         KC_P9,         KC_PPLS,
-                 LCTL(KC_TAB), KC_LEFT,    KC_DOWN,    KC_RGHT,    KC_LBRC,    KC_RBRC, LSFT_T(KC_P4), LGUI_T(KC_P5), LALT_T(KC_P6), LCTL_T(KC_MINS),
-        XXXXXXX, XXXXXXX,      LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_LPRN,    KC_RPRN, KC_P1,         KC_P2,         KC_P3,         KC_PAST,         KC_EQL,
-                                        LT(4, _______),_______,    _______,    _______, _______,       LT(4, KC_P0)
+                 LCS(KC_TAB),  LGUI(KC_W), KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_P7,         KC_P8,         KC_P9,         KC_PPLS,
+                 LCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LBRC,    KC_RBRC, LSFT_T(KC_P4), LGUI_T(KC_P5), LALT_T(KC_P6), LCTL_T(KC_MINS),
+        XXXXXXX, XXXXXXX,      XXXXXXX,    LGUI(KC_LBRC),LGUI(KC_RBRC),KC_LPRN,    KC_RPRN, KC_P1,         KC_P2,         KC_P3,         KC_PAST,         KC_EQL,
+                                        LT(4, _______),  _______,      _______,    _______, _______,       LT(4, KC_P0)
     ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -105,7 +105,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │  CTRL   │   ALT   │   CMD   │  SHIFT  │   ` ~   ││   : ;   │  SHIFT  │   CMD   │   ALT   │  CTRL   │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │         │         │         │         │                   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    \    │
+      │         │         │   CUT   │  COPY   │  PASTE  │         ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    \    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -113,10 +113,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_RAISE] = LAYOUT(
-                 KC_EXLM,      KC_AT,      KC_HASH,    KC_DLR,   KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  LSFT(KC_9), LSFT(KC_0),
-                 KC_LCTL,      KC_LALT,    KC_LGUI,    KC_LSFT,  KC_GRV,     KC_SCLN, KC_RSFT,   KC_RGUI,  KC_RALT,    KC_RCTL,
-        XXXXXXX, XXXXXXX,      XXXXXXX,    XXXXXXX,    XXXXXXX,  XXXXXXX,    KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      KC_BSLS,
-                                           _______,LT(4, _______),_______,   _______, LT(4, _______),_______
+                 KC_EXLM,      KC_AT,      KC_HASH,    KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  LSFT(KC_9), LSFT(KC_0),
+                 KC_LCTL,      KC_LALT,    KC_LGUI,    KC_LSFT,    KC_GRV,     KC_SCLN, KC_RSFT,   KC_RGUI,  KC_RALT,    KC_RCTL,
+        XXXXXXX, XXXXXXX,      LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), XXXXXXX,    KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      KC_BSLS,
+                                           _______,LT(4, _______), _______,   _______, LT(4, _______),_______
     ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸

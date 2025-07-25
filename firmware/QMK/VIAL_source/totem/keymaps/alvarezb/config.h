@@ -8,7 +8,6 @@ for more options.
 // Determine how handedness is detected
 // #define MASTER_LEFT // USB cable on left
 // #define MASTER_RIGHT // USB cable on right
-#define EE_HANDS //Flash eeprom on each side (use -bl compile arg)
 
 #define TAPPING_TERM 200
 #define FLOW_TAP_TERM 150
