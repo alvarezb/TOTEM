@@ -125,19 +125,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       │ a d j u s t                                     │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-        ╌┄┈┈───═╡  RESET  │         │         │         │         ││         │    F7   │   F8    │   F9    │   F12   │
+        ╌┄┈┈───═╡  RESET  │CAPS LOCK│         │         │         ││         │    F7   │   F8    │   F9    │   F12   │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
-                │  DEBUG  │         │         │         │         ││         │    F4   │   F5    │   F4    │   F11   │
+                │  DEBUG  │SCRL LOCK│         │         │         ││         │    F4   │   F5    │   F4    │   F11   │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │  MAKE   │ OS SWAP │         │         │         │monorepo ││         │    F1   │   F2    │   F3    │   F10   │         │
+      │  MAKE   │ OS SWAP │NUM LOCK │         │         │monorepo ││         │    F1   │   F2    │   F3    │   F10   │         │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_ADJUST] = LAYOUT(
-                QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
-                DB_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        MAKE_H, CG_TOGG, XXXXXXX, XXXXXXX, XXXXXXX, CDMR,       XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
+                QK_BOOT, KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
+                DB_TOGG, KC_SCRL, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
+        MAKE_H, CG_TOGG, KC_NUM, XXXXXXX, XXXXXXX, CDMR,       XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
                                   _______, _______, _______,    _______, _______, _______
     )
 };
