@@ -89,10 +89,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_LOWER] = LAYOUT(
-                 LCS(KC_TAB),  LGUI(KC_W), KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_P7,         KC_P8,         KC_P9,         KC_PPLS,
-                 LCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LBRC,    KC_RBRC, LSFT_T(KC_P4), LGUI_T(KC_P5), LALT_T(KC_P6), LCTL_T(KC_MINS),
-        XXXXXXX, XXXXXXX,      XXXXXXX,    LGUI(KC_LBRC),LGUI(KC_RBRC),KC_LPRN,    KC_RPRN, KC_P1,         KC_P2,         KC_P3,         KC_PAST,         KC_EQL,
-                                        LT(4, _______),  _______,      _______,    _______, _______,       LT(4, KC_P0)
+                 LCS(KC_TAB),  LGUI(KC_W), KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_7,         KC_8,         KC_9,         KC_PPLS,
+                 LCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LBRC,    KC_RBRC, LSFT_T(KC_4), LGUI_T(KC_5), LALT_T(KC_6), LCTL_T(KC_MINS),
+        XXXXXXX, XXXXXXX,      XXXXXXX,    LGUI(KC_LBRC),LGUI(KC_RBRC),KC_LPRN,    KC_RPRN, KC_1,         KC_2,         KC_3,         KC_PAST,         KC_EQL,
+                                        LT(4, _______),  _______,      _______,    _______, _______,      LT(4, KC_0)
     ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
