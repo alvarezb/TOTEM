@@ -1,13 +1,7 @@
+// Copyright 2025 @alvarezb
+// SPDX-License-Identifier: GPL-2.0-or-later
+
 #pragma once
-
-/* The way how "handedness" is decided (which half is which),
-see https://docs.qmk.fm/#/feature_split_keyboard?id=setting-handedness
-for more options.
-*/
-
-// Determine how handedness is detected
-// #define MASTER_LEFT // USB cable on left
-// #define MASTER_RIGHT // USB cable on right
 
 #define TAPPING_TERM 200
 #define TAPPING_TERM_PER_KEY
