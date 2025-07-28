@@ -10,6 +10,8 @@ for more options.
 // #define MASTER_RIGHT // USB cable on right
 
 #define TAPPING_TERM 200
+#define TAPPING_TERM_PER_KEY
+
 #define FLOW_TAP_TERM 150
 
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD

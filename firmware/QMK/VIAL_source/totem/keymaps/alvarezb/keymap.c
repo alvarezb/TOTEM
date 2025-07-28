@@ -137,7 +137,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJUST] = LAYOUT(
                 QK_BOOT, KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
                 DB_TOGG, KC_SCRL, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        MAKE_H, CG_TOGG, KC_NUM, XXXXXXX, XXXXXXX, CDMR,       XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
+        MAKE_H, CG_TOGG, KC_NUM, XXXXXXX, XXXXXXX, CDMR,        XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
                                   _______, _______, _______,    _______, _______, _______
     )
 };
@@ -208,6 +208,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             break;
     }
     return true;
+}
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+    // custom tapping term overrides
+    switch (keycode) {
+        case LCTL_T(KC_A): // left pinky
+            return TAPPING_TERM + 50;
+        case LCTL_T(KC_P): // right pinky
+            return TAPPING_TERM + 30;
+        default:
+            return TAPPING_TERM;
+    }
 }
 /*
   ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
