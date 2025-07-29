@@ -9,7 +9,7 @@
 
 enum totem_layers {
     _QWERTY,
-    _COLEMAK_DH,
+    _COLEMAK,
     _LOWER,
     _RAISE,
     _ADJUST,
@@ -20,7 +20,7 @@ enum totem_layers {
 // └─────────────────────────────────────────────────┘
 
 enum custom_keycodes {
-    COLEMAK_DH=SAFE_RANGE,
+    COLEMAK=SAFE_RANGE,
     QWERTY,
     LOWER,
     RAISE,
@@ -76,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    /  RAISE  /  LOWER  /   CMD   //  SHIFT  /  LOWER  /  RAISE  /   (hold)
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
-    [_COLEMAK_DH] = LAYOUT(
+    [_COLEMAK] = LAYOUT(
                  KC_Q,         KC_W,         KC_F,           KC_P,          KC_B,           KC_J,           KC_L,           KC_U,          KC_Y,          KC_SCLN,
                  LCTL_T(KC_A), LALT_T(KC_R), LGUI_T(KC_S),   LSFT_T(KC_T),  KC_G,           KC_M,           LSFT_T(KC_N),   LGUI_T(KC_E),  LALT_T(KC_I),  LCTL_T(KC_O),
     LCG(KC_SPC), KC_Z,         KC_X,         KC_C,           KC_D,          KC_V,           KC_K,           KC_H,           KC_COMM,       KC_DOT,        KC_SLSH,       KC_MINS,
@@ -178,9 +178,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // │ l a y e r                                       │
             // └─────────────────────────────────────────────────┘
 
-        case COLEMAK_DH:
+        case COLEMAK:
             if (record->event.pressed) {
-                set_single_persistent_default_layer(_COLEMAK_DH);
+                set_single_persistent_default_layer(_COLEMAK);
             }
             return false;
         case QWERTY:
