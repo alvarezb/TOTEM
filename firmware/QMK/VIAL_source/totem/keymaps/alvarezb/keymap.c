@@ -44,6 +44,12 @@ typedef union {
 
 user_config_t user_config;
 
+
+// ┌─────────────────────────────────────────────────┐
+// │ h e l p e r   f u n c t i o n s   s t u b s     │
+// └─────────────────────────────────────────────────┘
+bool is_apple_os(void);
+
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                          │
 // └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -272,7 +278,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         // └─────────────────────────────────────────────────┘
         case KC_WBAK:
             if (is_apple_os()){
-                tap_code(LGUI(KC_LBRC));
+                SEND_STRING(SS_LGUI("["));
             } else {
                 tap_code(KC_WBAK);
             }
@@ -280,7 +286,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KC_WFWD:
             if (is_apple_os()){
-                tap_code(LGUI(KC_RBRC));
+                SEND_STRING(SS_LGUI("]"));
             } else {
                 tap_code(KC_WFWD);
             }
