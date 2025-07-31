@@ -193,19 +193,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       │ a d j u s t                                     │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-        ╌┄┈┈───═╡  RESET  │CAPS LOCK│swp lyout│    ⊤    │         ││         │    F7   │   F8    │   F9    │   F12   │
+        ╌┄┈┈───═╡  RESET  │swp lyout│    ⊤    │         │         ││         │    F7   │   F8    │   F9    │   F12   │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
-                │  DEBUG  │SCRL LOCK│    ⊢    │    ☐    │    ⊣    ││         │    F4   │   F5    │   F4    │   F11   │
+                │  DEBUG  │    ⊢    │    ☐    │    ⊣    │         ││         │    F4   │   F5    │   F4    │   F11   │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │  MAKE   │monorepo │NUM LOCK │    ⊨    │    ⊥    │    ⫤    ││         │    F1   │   F2    │   F3    │   F10   │         │
+      │  MAKE   │monorepo │    ⊨    │    ⊥    │    ⫤    │         ││         │    F1   │   F2    │   F3    │   F10   │         │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_ADJUST] = LAYOUT(
-                QK_BOOT, KC_CAPS, SWP_LAYOUT, TOP_HALF, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
-                DB_TOGG, KC_SCRL, L_HALF,     MAXIMIZE, R_HALF,     XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        MAKE_H, CDMR,    KC_NUM,  L_1_WIN,    BOT_HALF, R_1_WIN,    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
+                QK_BOOT, SWP_LAYOUT, TOP_HALF, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
+                DB_TOGG, L_HALF,     MAXIMIZE, R_HALF,  XXXXXXX,    XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
+        MAKE_H, CDMR,    L_1_WIN,    BOT_HALF, R_1_WIN, XXXXXXX,    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
                                   _______,    _______, _______,    _______, _______, _______
     )
 };
