@@ -302,7 +302,8 @@ void keyboard_post_init_user(void) {
 
   // Read the user config from EEPROM
   user_config.raw = eeconfig_read_user();
-
+  
+  set_single_persistent_default_layer(_BASE);
   // Locks the default alpha layer
   switch (user_config.locked_alpha_layer) {
     case _COLEMAK:
