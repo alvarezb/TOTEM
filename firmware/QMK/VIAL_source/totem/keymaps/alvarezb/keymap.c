@@ -72,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         KC_QUOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
 
-                  LT(3,KC_DEL), LT(2,KC_TAB), LGUI_T(KC_SPC),    LSFT_T(KC_SPC), LT(2,KC_ENT), LT(3,KC_BSPC)
+        LT(_RAISE,KC_DEL), LT(_LOWER,KC_TAB), LGUI_T(KC_SPC),    LSFT_T(KC_SPC), LT(_LOWER,KC_ENT), LT(_RAISE,KC_BSPC)
     ),
     
     
@@ -133,7 +133,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │ CTL+TAB │    ←    │    ↓    │    →    │    [    ││    ]    │    4    │    5    │    6    │    -    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │  emoji  │         │         │ LGUI+[  │ LGUI+]  │    (    ││    )    │    1    │    2    │    3    │    *    │    =    │
+      │  emoji  │         │         │brws_fwd │brws_back│    (    ││    )    │    1    │    2    │    3    │    *    │    =    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    0    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -141,10 +141,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_LOWER] = LAYOUT(
-                 LCS(KC_TAB),  LGUI(KC_W), KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_7,         KC_8,         KC_9,         KC_PPLS,
-                 LCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LBRC,    KC_RBRC, LSFT_T(KC_4), LGUI_T(KC_5), LALT_T(KC_6), LCTL_T(KC_MINS),
-    LCG(KC_SPC), XXXXXXX,      XXXXXXX,    LGUI(KC_LBRC),LGUI(KC_RBRC),KC_LPRN,    KC_RPRN, KC_1,         KC_2,         KC_3,         KC_PAST,         KC_EQL,
-                                        LT(4, _______),  _______,      _______,    _______, _______,      LT(4, KC_0)
+                 RCS(KC_TAB),  LGUI(KC_W), KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_7,         KC_8,         KC_9,         KC_PPLS,
+                 RCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LBRC,    KC_RBRC, LSFT_T(KC_4), LGUI_T(KC_5), LALT_T(KC_6), LCTL_T(KC_MINS),
+    LCG(KC_SPC), XXXXXXX,      XXXXXXX,    KC_WBAK,      KC_WFWD,      KC_LPRN,    KC_RPRN, KC_1,         KC_2,         KC_3,         KC_PAST,         KC_EQL,
+                                  LT(_ADJUST, _______),  _______,      _______,    _______, _______,      LT(_ADJUST, KC_0)
     ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -168,7 +168,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  KC_EXLM,  KC_AT,      KC_HASH,    KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  LSFT(KC_9), LSFT(KC_0),
                  KC_LCTL,  KC_LALT,    KC_LGUI,    KC_LSFT,    KC_GRV,     KC_QUOT, KC_RSFT,   KC_RGUI,  KC_RALT,    KC_RCTL,
         XXXXXXX, XXXXXXX,  LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_ESC,     KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      KC_BSLS,
-                                        _______,LT(4, _______), _______,   _______, LT(4, _______),_______
+                                  _______,LT(_ADJUST, _______), _______,   _______, LT(_ADJUST, _______),_______
     ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -265,6 +265,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_ENTER);
             }
             break;
+
+
+        // ┌─────────────────────────────────────────────────┐
+        // │ O S   D i f f e r e n c e s                     │
+        // └─────────────────────────────────────────────────┘
+        case KC_WBAK:
+            if (is_apple_os()){
+                tap_code(LGUI(KC_LBRC));
+            } else {
+                tap_code(KC_WBAK);
+            }
+            break;
+
+        case KC_WFWD:
+            if (is_apple_os()){
+                tap_code(LGUI(KC_RBRC));
+            } else {
+                tap_code(KC_WFWD);
+            }
+            break;
+
     }
     return true;
 }
@@ -326,4 +347,9 @@ void eeconfig_init_user(void) {  // EEPROM is getting reset!
     user_config.raw = 0;
     user_config.locked_alpha_layer = _COLEMAK;
     eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
+}
+
+bool is_apple_os(void){
+    // check if we're set up for macos/ios or another OS
+    return keymap_config.swap_lctl_lgui == false; // MacOS
 }
