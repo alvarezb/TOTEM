@@ -29,6 +29,16 @@ enum custom_keycodes {
     MAKE_H,
     SNAP,
     CDMR,
+    CLS_TAB,
+    CLS_WIN,
+    SWP_LAYOUT,
+    MAXIMIZE,
+    BOT_HALF,
+    TOP_HALF,
+    L_HALF,
+    R_HALF,
+    R_1_WIN,
+    L_1_WIN,
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -135,7 +145,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       │ l o w e r (RED)                                 │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-        ╌┄┈┈───═╡ LCS+TAB │  CMD+W  │    ↑    │  LSG+T  │    {    ││    }    │    7    │    8    │    9    │    +    │
+        ╌┄┈┈───═╡ LCS+TAB │ CLS_TAB │    ↑    │  LSG+T  │    {    ││    }    │    7    │    8    │    9    │    +    │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │ CTL+TAB │    ←    │    ↓    │    →    │    [    ││    ]    │    4    │    5    │    6    │    -    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
@@ -147,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_LOWER] = LAYOUT(
-                 RCS(KC_TAB),  LGUI(KC_W), KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_7,         KC_8,         KC_9,         KC_PPLS,
+                 RCS(KC_TAB),  CLS_TAB,    KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_7,         KC_8,         KC_9,         KC_PPLS,
                  RCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LBRC,    KC_RBRC, LSFT_T(KC_4), LGUI_T(KC_5), LALT_T(KC_6), LCTL_T(KC_MINS),
     LCG(KC_SPC), XXXXXXX,      XXXXXXX,    KC_WBAK,      KC_WFWD,      KC_LPRN,    KC_RPRN, KC_1,         KC_2,         KC_3,         KC_PAST,         KC_EQL,
                                   LT(_ADJUST, _______),  _______,      _______,    _______, _______,      LT(_ADJUST, KC_0)
@@ -183,20 +193,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       │ a d j u s t                                     │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-        ╌┄┈┈───═╡  RESET  │CAPS LOCK│ COLEMAK │         │         ││         │    F7   │   F8    │   F9    │   F12   │
+        ╌┄┈┈───═╡  RESET  │CAPS LOCK│swp lyout│    ⊤    │         ││         │    F7   │   F8    │   F9    │   F12   │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
-                │  DEBUG  │SCRL LOCK│ QWERTY  │         │         ││         │    F4   │   F5    │   F4    │   F11   │
+                │  DEBUG  │SCRL LOCK│    ⊢    │    ☐    │    ⊣    ││         │    F4   │   F5    │   F4    │   F11   │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │  MAKE   │         │NUM LOCK │         │         │monorepo ││         │    F1   │   F2    │   F3    │   F10   │         │
+      │  MAKE   │monorepo │NUM LOCK │    ⊨    │    ⊥    │    ⫤    ││         │    F1   │   F2    │   F3    │   F10   │         │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_ADJUST] = LAYOUT(
-                QK_BOOT, KC_CAPS, COLEMAK, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
-                DB_TOGG, KC_SCRL, QWERTY,  XXXXXXX, XXXXXXX,    XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        MAKE_H, XXXXXXX, KC_NUM,  XXXXXXX, XXXXXXX, CDMR,       XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
-                                  _______, _______, _______,    _______, _______, _______
+                QK_BOOT, KC_CAPS, SWP_LAYOUT, TOP_HALF, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
+                DB_TOGG, KC_SCRL, L_HALF,     MAXIMIZE, R_HALF,     XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
+        MAKE_H, CDMR,    KC_NUM,  L_1_WIN,    BOT_HALF, R_1_WIN,    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
+                                  _______,    _______, _______,    _______, _______, _______
     )
 };
 
@@ -214,8 +224,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case COLEMAK:
             if (record->event.pressed) {
-                //set_single_persistent_default_layer(_COLEMAK);
-
                 // get config, update locked layer, write it back
                 user_config.raw = eeconfig_read_user();
                 user_config.locked_alpha_layer = _COLEMAK;
@@ -228,8 +236,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case QWERTY:
             if (record->event.pressed) {
-                //set_single_persistent_default_layer(_QWERTY);
-
                 // get config, update locked layer, write it back
                 user_config.raw = eeconfig_read_user();
                 user_config.locked_alpha_layer = _QWERTY;
@@ -238,6 +244,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // re-initialize the keyboard
                 keyboard_post_init_user();
             }
+            return false;
+
+        case SWP_LAYOUT:
+            // toggle between possible layouts, and save to eeprom
+            user_config.raw = eeconfig_read_user();
+            if (user_config.locked_alpha_layer == _COLEMAK) {
+                user_config.locked_alpha_layer = _QWERTY;
+            } else {
+                user_config.locked_alpha_layer = _COLEMAK;
+            }
+            eeconfig_update_user(user_config.raw);
+            keyboard_post_init_user();
             return false;
 
             // ┌─────────────────────────────────────────────────┐
@@ -289,6 +307,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_LGUI("]"));
             } else {
                 tap_code(KC_WFWD);
+            }
+            break;
+        case CLS_TAB:
+            if (is_apple_os()){
+                SEND_STRING(SS_LGUI("w"));
+            } else {
+                SEND_STRING(SS_LCTL(SS_TAP(X_F4)));
+            }
+            break;
+
+        case MAXIMIZE:
+            if(is_apple_os()){
+                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_ENTER))));
+            } else {
+                // need to experiment
+            }
+            break;
+        case BOT_HALF:
+            if(is_apple_os()){
+                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_DOWN))));
+            } else {
+                SEND_STRING(SS_RGUI(SS_TAP(X_DOWN)));
+            }
+            break;
+        case TOP_HALF:
+            if(is_apple_os()){
+                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_UP))));
+            } else {
+                SEND_STRING(SS_RGUI(SS_TAP(X_UP)));
+            }
+            break;
+        case L_HALF:
+            if(is_apple_os()){
+                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_LEFT))));
+            } else {
+                SEND_STRING(SS_RGUI(SS_TAP(X_LEFT)));
+            }
+            break;
+        case R_HALF:
+            if(is_apple_os()){
+                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_RIGHT))));
+            } else {
+                SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
+            }
+            break;
+        case L_1_WIN:
+            if(is_apple_os()){
+                SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_LEFT)))));
+            } else {
+                SEND_STRING(SS_RGUI(SS_TAP(X_LEFT)));
+            }
+            break;
+        case R_1_WIN:
+            if(is_apple_os()){
+                SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_RIGHT)))));
+            } else {
+                SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
             }
             break;
 
