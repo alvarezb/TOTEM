@@ -216,14 +216,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
+    if (record->event.pressed){
+        // NOTE this main switch section only activates on key pressed events.
+        switch (keycode) {
 
-            // ┌─────────────────────────────────────────────────┐
-            // │ l a y e r                                       │
-            // └─────────────────────────────────────────────────┘
+                // ┌─────────────────────────────────────────────────┐
+                // │ l a y e r                                       │
+                // └─────────────────────────────────────────────────┘
 
-        case COLEMAK:
-            if (record->event.pressed) {
+            case COLEMAK:
                 // get config, update locked layer, write it back
                 user_config.raw = eeconfig_read_user();
                 user_config.locked_alpha_layer = _COLEMAK;
@@ -231,11 +232,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
                 // re-initialize the keyboard
                 keyboard_post_init_user();
-            }
-            return false;
+                return false;
 
-        case QWERTY:
-            if (record->event.pressed) {
+            case QWERTY:
                 // get config, update locked layer, write it back
                 user_config.raw = eeconfig_read_user();
                 user_config.locked_alpha_layer = _QWERTY;
@@ -243,131 +242,127 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
                 // re-initialize the keyboard
                 keyboard_post_init_user();
-            }
-            return false;
+                return false;
 
-        case SWP_LAYOUT:
-            // toggle between possible layouts, and save to eeprom
-            user_config.raw = eeconfig_read_user();
-            if (user_config.locked_alpha_layer == _COLEMAK) {
-                user_config.locked_alpha_layer = _QWERTY;
-            } else {
-                user_config.locked_alpha_layer = _COLEMAK;
-            }
-            eeconfig_update_user(user_config.raw);
-            keyboard_post_init_user();
-            return false;
+            case SWP_LAYOUT:
+                // toggle between possible layouts, and save to eeprom
+                user_config.raw = eeconfig_read_user();
+                if (user_config.locked_alpha_layer == _COLEMAK) {
+                    user_config.locked_alpha_layer = _QWERTY;
+                } else {
+                    user_config.locked_alpha_layer = _COLEMAK;
+                }
+                eeconfig_update_user(user_config.raw);
+                keyboard_post_init_user();
+                return false;
 
-            // ┌─────────────────────────────────────────────────┐
-            // │ q m k                                           │
-            // └─────────────────────────────────────────────────┘
+                // ┌─────────────────────────────────────────────────┐
+                // │ q m k                                           │
+                // └─────────────────────────────────────────────────┘
 
-        case MAKE_H:
-            if (record->event.pressed) {
+            case MAKE_H:
                 SEND_STRING("qmk flash -kb totem -km alvarezb");
                 tap_code(KC_ENTER);
-            }
-            break;
+                break;
 
-            // ┌─────────────────────────────────────────────────┐
-            // │ p r o d u c t i v i t y                         │
-            // └─────────────────────────────────────────────────┘
+                // ┌─────────────────────────────────────────────────┐
+                // │ p r o d u c t i v i t y                         │
+                // └─────────────────────────────────────────────────┘
 
-        case SNAP:
-            if (record->event.pressed) {
+            case SNAP:
                 if (!keymap_config.swap_lctl_lgui) {
                     SEND_STRING(SS_LSFT(SS_LWIN("S"))); // WIN
                 } else {
                     SEND_STRING(SS_LSFT(SS_LCMD(SS_LCTL("4")))); // MAC
                 }
-            }
-            break;
-        
-        case CDMR:
-            if (record->event.pressed) {
+                break;
+            
+            case CDMR:
                 SEND_STRING("cd ~/devel/monorepo; source venv/bin/activate;");
                 tap_code(KC_ENTER);
-            }
-            break;
+                break;
 
 
-        // ┌─────────────────────────────────────────────────┐
-        // │ O S   D i f f e r e n c e s                     │
-        // └─────────────────────────────────────────────────┘
-        case KC_WBAK:
-            if (is_apple_os()){
-                SEND_STRING(SS_LGUI("["));
-            } else {
-                tap_code(KC_WBAK);
-            }
-            break;
+            // ┌─────────────────────────────────────────────────┐
+            // │ O S   D i f f e r e n c e s                     │
+            // └─────────────────────────────────────────────────┘
+            case KC_WBAK:
+                if (is_apple_os()){
+                    SEND_STRING(SS_LGUI("["));
+                } else {
+                    tap_code(KC_WBAK);
+                }
+                break;
 
-        case KC_WFWD:
-            if (is_apple_os()){
-                SEND_STRING(SS_LGUI("]"));
-            } else {
-                tap_code(KC_WFWD);
-            }
-            break;
-        case CLS_TAB:
-            if (is_apple_os()){
-                SEND_STRING(SS_LGUI("w"));
-            } else {
-                SEND_STRING(SS_LCTL(SS_TAP(X_F4)));
-            }
-            break;
+            case KC_WFWD:
+                if (is_apple_os()){
+                    SEND_STRING(SS_LGUI("]"));
+                } else {
+                    tap_code(KC_WFWD);
+                }
+                break;
+            case CLS_TAB:
+                if (is_apple_os()){
+                    SEND_STRING(SS_LGUI("w"));
+                } else {
+                    SEND_STRING(SS_LCTL(SS_TAP(X_F4)));
+                }
+                break;
 
-        case MAXIMIZE:
-            if(is_apple_os()){
-                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_ENTER))));
-            } else {
-                // need to experiment
-            }
-            break;
-        case BOT_HALF:
-            if(is_apple_os()){
-                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_DOWN))));
-            } else {
-                SEND_STRING(SS_RGUI(SS_TAP(X_DOWN)));
-            }
-            break;
-        case TOP_HALF:
-            if(is_apple_os()){
-                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_UP))));
-            } else {
-                SEND_STRING(SS_RGUI(SS_TAP(X_UP)));
-            }
-            break;
-        case L_HALF:
-            if(is_apple_os()){
-                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_LEFT))));
-            } else {
-                SEND_STRING(SS_RGUI(SS_TAP(X_LEFT)));
-            }
-            break;
-        case R_HALF:
-            if(is_apple_os()){
-                SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_RIGHT))));
-            } else {
-                SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
-            }
-            break;
-        case L_1_WIN:
-            if(is_apple_os()){
-                SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_LEFT)))));
-            } else {
-                SEND_STRING(SS_RGUI(SS_TAP(X_LEFT)));
-            }
-            break;
-        case R_1_WIN:
-            if(is_apple_os()){
-                SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_RIGHT)))));
-            } else {
-                SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
-            }
-            break;
+            case MAXIMIZE:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_ENTER))));
+                } else {
+                    // need to experiment
+                }
+                break;
+            case BOT_HALF:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_DOWN))));
+                } else {
+                    SEND_STRING(SS_RGUI(SS_TAP(X_DOWN)));
+                }
+                break;
+            case TOP_HALF:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_UP))));
+                } else {
+                    SEND_STRING(SS_RGUI(SS_TAP(X_UP)));
+                }
+                break;
+            case L_HALF:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_LEFT))));
+                } else {
+                    SEND_STRING(SS_RGUI(SS_TAP(X_LEFT)));
+                }
+                break;
+            case R_HALF:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LCTL(SS_LALT(SS_TAP(X_RIGHT))));
+                } else {
+                    SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
+                }
+                break;
+            case L_1_WIN:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_LEFT)))));
+                } else {
+                    SEND_STRING(SS_RGUI(SS_TAP(X_LEFT)));
+                }
+                break;
+            case R_1_WIN:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_RIGHT)))));
+                } else {
+                    SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
+                }
+                break;
 
+        }
     }
+    // Any key presses that are not exclusively used on event.pressed
+    // should be handled below:
     return true;
 }
 
@@ -384,6 +379,7 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+// handle macos vs windows/linux
 bool process_detected_host_os_user(os_variant_t detected_os){
     if ((detected_os == OS_MACOS) | (detected_os == OS_IOS)) {
         keymap_config.swap_lctl_lgui = false; // MacOS
@@ -398,10 +394,8 @@ bool process_detected_host_os_user(os_variant_t detected_os){
     }
 }
 
-// load default alpha layer from eeprom
+// any keyboard setup goes here
 void keyboard_post_init_user(void) {
-  // Call the keymap level matrix init.
-
   // Read the user config from EEPROM
   user_config.raw = eeconfig_read_user();
   
@@ -430,6 +424,7 @@ void eeconfig_init_user(void) {  // EEPROM is getting reset!
     eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
 }
 
+// helper functions
 bool is_apple_os(void){
     // check if we're set up for macos/ios or another OS
     return keymap_config.swap_lctl_lgui == false; // MacOS
