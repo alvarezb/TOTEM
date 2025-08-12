@@ -26,7 +26,7 @@ enum custom_keycodes {
     LOWER,
     RAISE,
     ADJUST,
-    MAKE_H,
+    SWAP_OS,
     SNAP,
     CDMR,
     CLS_TAB,
@@ -205,7 +205,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJUST] = LAYOUT(
                 QK_BOOT, SWP_LAYOUT, TOP_HALF, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
                 DB_TOGG, L_HALF,     MAXIMIZE, R_HALF,  XXXXXXX,    XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        MAKE_H, CDMR,    L_1_WIN,    BOT_HALF, R_1_WIN, XXXXXXX,    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
+        SWAP_OS,CDMR,    L_1_WIN,    BOT_HALF, R_1_WIN, XXXXXXX,    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
                                   _______,    _______, _______,    _______, _______, _______
     )
 };
@@ -260,9 +260,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // │ q m k                                           │
                 // └─────────────────────────────────────────────────┘
 
-            case MAKE_H:
-                SEND_STRING("qmk flash -kb totem -km alvarezb");
-                tap_code(KC_ENTER);
+            case SWAP_OS:
+                keymap_config.swap_lctl_lgui = !keymap_config.swap_lctl_lgui;
                 break;
 
                 // ┌─────────────────────────────────────────────────┐
