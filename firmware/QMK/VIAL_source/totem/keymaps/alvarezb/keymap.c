@@ -39,6 +39,10 @@ enum custom_keycodes {
     R_HALF,
     R_1_WIN,
     L_1_WIN,
+    APP_SWP,
+    ZOOM_IN,
+    ZOOM_OUT,
+    ZOOM_RST,
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -72,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       │ b a s e   s y m b o l s                         │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-        ╌┄┈┈───═╡         │         │         │         │         ││         │         │         │         │   ; :   │
+        ╌┄┈┈───═╡         │         │         │         │         ││         │         │         │         │   ` ~   │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │         │         │         │         │         ││         │         │         │         │         │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
@@ -84,7 +88,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_BASE] = LAYOUT(
-                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SCLN,
+                 XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_GRV,
                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         KC_QUOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
 
@@ -171,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
         ╌┄┈┈───═╡    !    │    @    │    #    │    $    │    %    ││    ^    │    &    │    *    │    (    │    )    │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
-                │  CTRL   │   ALT   │   CMD   │  SHIFT  │   ` ~   ││   ' "   │  SHIFT  │   CMD   │   ALT   │  CTRL   │
+                │ APP_SWP │ ZOOM -  │ ZOOM 0  │ ZOOM +  │    :    ││    ;    │  SHIFT  │   CMD   │   ALT   │  CTRL   │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
       │         │         │   CUT   │  COPY   │  PASTE  │   ESC   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    \    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
@@ -182,7 +186,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_RAISE] = LAYOUT(
                  KC_EXLM,  KC_AT,      KC_HASH,    KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  LSFT(KC_9), LSFT(KC_0),
-                 KC_LCTL,  KC_LALT,    KC_LGUI,    KC_LSFT,    KC_GRV,     KC_QUOT, KC_RSFT,   KC_RGUI,  KC_RALT,    KC_RCTL,
+                 APP_SWP,  ZOOM_OUT,   ZOOM_RST,   ZOOM_IN,    KC_COLN,    KC_SCLN, KC_RSFT,   KC_RGUI,  KC_RALT,    KC_RCTL,
         XXXXXXX, XXXXXXX,  LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_ESC,     KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      KC_BSLS,
                                   _______,LT(_ADJUST, _______), _______,   _______, LT(_ADJUST, _______),_______
     ),
@@ -355,6 +359,38 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING(SS_LCTL(SS_LALT(SS_LGUI(SS_TAP(X_RIGHT)))));
                 } else {
                     SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
+                }
+                break;
+
+            // ┌─────────────────────────────────────────────────┐
+            // │ z o o m   a n d   a p p   s w i t c h e r       │
+            // └─────────────────────────────────────────────────┘
+            case APP_SWP:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LGUI(SS_TAP(X_TAB)));
+                } else {
+                    SEND_STRING(SS_LALT(SS_TAP(X_TAB)));
+                }
+                break;
+            case ZOOM_IN:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LGUI(SS_LSFT("=")));
+                } else {
+                    SEND_STRING(SS_LCTL(SS_LSFT("=")));
+                }
+                break;
+            case ZOOM_OUT:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LGUI("-"));
+                } else {
+                    SEND_STRING(SS_LCTL("-"));
+                }
+                break;
+            case ZOOM_RST:
+                if(is_apple_os()){
+                    SEND_STRING(SS_LGUI("0"));
+                } else {
+                    SEND_STRING(SS_LCTL("0"));
                 }
                 break;
 
