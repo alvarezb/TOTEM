@@ -10,6 +10,7 @@
 enum totem_layers {
     _BASE,
     _QWERTY,
+    _COLEMAK_DH,
     _COLEMAK,
     _LOWER,
     _RAISE,
@@ -21,7 +22,8 @@ enum totem_layers {
 // └─────────────────────────────────────────────────┘
 
 enum custom_keycodes {
-    COLEMAK=SAFE_RANGE,
+    COLEMAK_DH=SAFE_RANGE,
+    COLEMAK,
     QWERTY,
     LOWER,
     RAISE,
@@ -39,6 +41,7 @@ enum custom_keycodes {
     R_HALF,
     R_1_WIN,
     L_1_WIN,
+    OS_LAYOUT,
 };
 
 // ┌─────────────────────────────────────────────────┐
@@ -59,6 +62,7 @@ user_config_t user_config;
 // │ h e l p e r   f u n c t i o n s   s t u b s     │
 // └─────────────────────────────────────────────────┘
 bool is_apple_os(void);
+void type_os_and_layout(void);
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
 // │ K E Y M A P S                                                                                                          │
@@ -78,9 +82,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
       │   ' "   │         │         │         │         │         ││         │         │   , <   │   . >   │   / ?   │   - _   │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
-                                    │   DEL   │   TAB   │  SPACE  ││  SPACE  │  ENTER  │  BSPC   │  (tap)
+                                    │   ESC   │   TAB   │  SPACE  ││  SPACE  │  ENTER  │  BSPC   │  (tap)
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
-                                   /  RAISE  /  LOWER  /   CMD   //  SHIFT  /  LOWER  /  RAISE  /   (hold)
+                                   /  RAISE  /  LOWER  /   CMD   //  SHIFT  /   CTRL  /   ALT   /   (hold)
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_BASE] = LAYOUT(
@@ -88,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         KC_QUOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
 
-        LT(_RAISE,KC_DEL), LT(_LOWER,KC_TAB), LGUI_T(KC_SPC),    LSFT_T(KC_SPC), LT(_LOWER,KC_ENT), LT(_RAISE,KC_BSPC)
+        LT(_RAISE,KC_ESC), LT(_LOWER,KC_TAB), LGUI_T(KC_SPC),    LSFT_T(KC_SPC), LCTL_T(KC_ENT), LALT_T(KC_BSPC)
     ),
     
     
@@ -109,15 +113,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_QWERTY] = LAYOUT(
-                 KC_Q,         KC_W,         KC_E,          KC_R,          KC_T,      KC_Y,      KC_U,           KC_I,          KC_O,          _______,
-                 LCTL_T(KC_A), LALT_T(KC_S), LGUI_T(KC_D),  LSFT_T(KC_F),  KC_G,      KC_H,      LSFT_T(KC_J),   LGUI_T(KC_K),  LALT_T(KC_L),  LCTL_T(KC_P),
-        _______, KC_Z,         KC_X,         KC_C,          KC_V,          KC_B,      KC_N,      KC_M,           _______,       _______,        _______,       _______,
-                                             _______,       _______,       _______,   _______,   _______,        _______
+                 KC_Q,         KC_W,        KC_E,          KC_R,          KC_T,      KC_Y,      KC_U,           KC_I,          KC_O,          _______,
+                 KC_A,         KC_S,        KC_D,          KC_F,          KC_G,      KC_H,      KC_J,           KC_K,          KC_L,          KC_P,
+        _______, KC_Z,         KC_X,        KC_C,          KC_V,          KC_B,      KC_N,      KC_M,           _______,       _______,       _______,       _______,
+                                            _______,       _______,       _______,   _______,   _______,        _______
     ),
 
     /*
       ┌─────────────────────────────────────────────────┐
-      │ c o l e m a c - d h                             │      ╭╮╭╮╭╮╭╮
+      │ c o l e m a k - d h                             │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
         ╌┄┈┈───═╡    Q    │    W    │    F    │    P    │    B    ││    J    │    L    │    U    │    Y    │    ▼    │
@@ -131,10 +135,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    /    ▼    /    ▼    /    ▼    //    ▼    /    ▼    /    ▼    /   (hold)
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
-    [_COLEMAK] = LAYOUT(
+    [_COLEMAK_DH] = LAYOUT(
                  KC_Q,         KC_W,         KC_F,          KC_P,          KC_B,        KC_J,      KC_L,           KC_U,          KC_Y,          _______,
-                 LCTL_T(KC_A), LALT_T(KC_R), LGUI_T(KC_S),  LSFT_T(KC_T),  KC_G,        KC_M,      LSFT_T(KC_N),   LGUI_T(KC_E),  LALT_T(KC_I),  LCTL_T(KC_O),
+                 KC_A,         KC_R,         KC_S,          KC_T,          KC_G,        KC_M,      KC_N,           KC_E,          KC_I,          KC_O,
         _______, KC_Z,         KC_X,         KC_C,          KC_D,          KC_V,        KC_K,      KC_H,           _______,       _______,       _______,       _______,
+                                             _______,       _______,       _______,     _______,   _______,        _______
+    ),
+
+    /*
+      ┌─────────────────────────────────────────────────┐
+      │ c o l e m a k                                   │      ╭╮╭╮╭╮╭╮
+      └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
+                ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
+        ╌┄┈┈───═╡    Q    │    W    │    F    │    P    │    G    ││    J    │    L    │    U    │    Y    │    ▼    │
+                ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
+                │    A    │    R    │    S    │    T    │    D    ││    H    │    N    │    E    │    I    │    O    │
+      ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
+      │    ▼    │    Z    │    X    │    C    │    V    │    B    ││    K    │    M    │    ▼    │    ▼    │    ▼    │    ▼    │
+      └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
+                                    │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │  (tap)
+                                    ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
+                                   /    ▼    /    ▼    /    ▼    //    ▼    /    ▼    /    ▼    /   (hold)
+                                  └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
+
+    [_COLEMAK] = LAYOUT(
+                 KC_Q,         KC_W,         KC_F,          KC_P,          KC_G,        KC_J,      KC_L,           KC_U,          KC_Y,          _______,
+                 KC_A,         KC_R,         KC_S,          KC_T,          KC_D,        KC_H,      KC_N,           KC_E,          KC_I,          KC_O,
+        _______, KC_Z,         KC_X,         KC_C,          KC_V,          KC_B,        KC_K,      KC_M,           _______,       _______,       _______,       _______,
                                              _______,       _______,       _______,     _______,   _______,        _______
     ),
 
@@ -147,9 +174,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
         ╌┄┈┈───═╡ LCS+TAB │ CLS_TAB │    ↑    │  LSG+T  │    {    ││    }    │    7    │    8    │    9    │    +    │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
-                │ CTL+TAB │    ←    │    ↓    │    →    │    [    ││    ]    │    4    │    5    │    6    │    -    │
+                │ CTL+TAB │    ←    │    ↓    │    →    │    (    ││    )    │    4    │    5    │    6    │    -    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │  emoji  │         │         │brws_fwd │brws_back│    (    ││    )    │    1    │    2    │    3    │    *    │    =    │
+      │    ▼    │  emoji  │    ▼    │brws_fwd │brws_back│    [    ││    ]    │    1    │    2    │    3    │    *    │    =    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    0    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -157,10 +184,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_LOWER] = LAYOUT(
-                 RCS(KC_TAB),  CLS_TAB,    KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_7,         KC_8,         KC_9,         KC_PPLS,
-                 RCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LBRC,    KC_RBRC, LSFT_T(KC_4), LGUI_T(KC_5), LALT_T(KC_6), LCTL_T(KC_MINS),
-    LCG(KC_SPC), XXXXXXX,      XXXXXXX,    KC_WBAK,      KC_WFWD,      KC_LPRN,    KC_RPRN, KC_1,         KC_2,         KC_3,         KC_PAST,         KC_EQL,
-                                  LT(_ADJUST, _______),  _______,      _______,    _______, _______,      LT(_ADJUST, KC_0)
+                 RCS(KC_TAB),  CLS_TAB,    KC_UP,        LSG(KC_T),    KC_LCBR,    KC_RCBR, KC_7,         KC_8,         KC_9,         KC_EQL,
+                 RCTL(KC_TAB), KC_LEFT,    KC_DOWN,      KC_RGHT,      KC_LPRN,    KC_RPRN, KC_4,         KC_5,         KC_6,         KC_MINS,
+    _______,     LCG(KC_SPC),  _______,    KC_WBAK,      KC_WFWD,      KC_LBRC,    KC_RBRC, KC_1,         KC_2,         KC_3,         KC_PAST,         KC_EQL,
+                                  LT(_ADJUST, _______),  _______,      _______,    _______, _______,      KC_0
     ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -169,22 +196,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       │ r a i s e  (BLUE)                               │      ╭╮╭╮╭╮╭╮
       └─────────────────────────────────────────────────┘      │╰╯╰╯╰╯│
                 ┌─────────┬─────────┬─────────┬─────────┬──────╨──┐┌──╨──────┬─────────┬─────────┬─────────┬─────────┐
-        ╌┄┈┈───═╡    !    │    @    │    #    │    $    │    %    ││    ^    │    &    │    *    │    (    │    )    │
+        ╌┄┈┈───═╡    !    │    @    │    #    │    $    │    %    ││    ^    │    &    │    *    │    \    │    |    │
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
-                │  CTRL   │   ALT   │   CMD   │  SHIFT  │   ` ~   ││   ' "   │  SHIFT  │   CMD   │   ALT   │  CTRL   │
+                │  CTRL   │   ALT   │   CMD   │  SHIFT  │   ` ~   ││   ' "   │    ▼    │    ▼    │    ▼    │    ▼    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │         │         │   CUT   │  COPY   │  PASTE  │   ESC   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    \    │
+      │ SHOW OS │    ▼    │   CUT   │  COPY   │  PASTE  │   - _   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    ▼    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
-                                   /         /  ADJUST /         //         / ADJUST  /         /
+                                   /    ▼    /  ADJUST /    ▼    //    ▼    / ADJUST  /   DEL   /
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_RAISE] = LAYOUT(
-                 KC_EXLM,  KC_AT,      KC_HASH,    KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  LSFT(KC_9), LSFT(KC_0),
-                 KC_LCTL,  KC_LALT,    KC_LGUI,    KC_LSFT,    KC_GRV,     KC_QUOT, KC_RSFT,   KC_RGUI,  KC_RALT,    KC_RCTL,
-        XXXXXXX, XXXXXXX,  LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_ESC,     KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      KC_BSLS,
-                                  _______,LT(_ADJUST, _______), _______,   _______, LT(_ADJUST, _______),_______
+                 KC_EXLM,  KC_AT,      KC_HASH,    KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  KC_BSLS, LSFT(KC_BSLS),
+                 KC_LCTL,  KC_LALT,    KC_LGUI,    KC_LSFT,    KC_GRV,     KC_QUOT, _______,   _______,  _______,    _______,
+        OS_LAYOUT,_______, LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_MINS,    KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      _______,
+                                  _______,LT(_ADJUST, _______), _______,   _______, LT(_ADJUST, _______),KC_DEL
     ),
     /*
       ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -197,7 +224,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │  DEBUG  │    ⊢    │    ☐    │    ⊣    │         ││         │    F4   │   F5    │   F4    │   F11   │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │  MAKE   │monorepo │    ⊨    │    ⊥    │    ⫤    │         ││         │    F1   │   F2    │   F3    │   F10   │         │
+      │ SWP_OS  |    ▼    │    ⊨    │    ⊥    │    ⫤    │         ││         │    F1   │   F2    │   F3    │   F10   │         │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
@@ -205,7 +232,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJUST] = LAYOUT(
                 QK_BOOT, SWP_LAYOUT, TOP_HALF, XXXXXXX, XXXXXXX,    XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F12,
                 DB_TOGG, L_HALF,     MAXIMIZE, R_HALF,  XXXXXXX,    XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        SWAP_OS,CDMR,    L_1_WIN,    BOT_HALF, R_1_WIN, XXXXXXX,    XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
+        SWAP_OS,_______,    L_1_WIN,    BOT_HALF, R_1_WIN, XXXXXXX, XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F10, XXXXXXX,
                                   _______,    _______, _______,    _______, _______, _______
     )
 };
@@ -219,10 +246,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed){
         // NOTE this main switch section only activates on key pressed events.
         switch (keycode) {
+            case COLEMAK_DH:
+                // get config, update locked layer, write it back
+                user_config.raw = eeconfig_read_user();
+                user_config.locked_alpha_layer = _COLEMAK_DH;
+                eeconfig_update_user(user_config.raw);
 
-                // ┌─────────────────────────────────────────────────┐
-                // │ l a y e r                                       │
-                // └─────────────────────────────────────────────────┘
+                // re-initialize the keyboard
+                keyboard_post_init_user();
+                return false;
 
             case COLEMAK:
                 // get config, update locked layer, write it back
@@ -247,11 +279,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case SWP_LAYOUT:
                 // toggle between possible layouts, and save to eeprom
                 user_config.raw = eeconfig_read_user();
-                if (user_config.locked_alpha_layer == _COLEMAK) {
+                if (user_config.locked_alpha_layer == _COLEMAK_DH) {
                     user_config.locked_alpha_layer = _QWERTY;
-                } else {
+                } else if (user_config.locked_alpha_layer == _QWERTY) {
                     user_config.locked_alpha_layer = _COLEMAK;
+                } else if (user_config.locked_alpha_layer == _COLEMAK) {
+                    user_config.locked_alpha_layer = _COLEMAK_DH;
                 }
+
                 eeconfig_update_user(user_config.raw);
                 keyboard_post_init_user();
                 return false;
@@ -357,6 +392,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     SEND_STRING(SS_RGUI(SS_TAP(X_RIGHT)));
                 }
                 break;
+            case OS_LAYOUT:
+                type_os_and_layout();
+                break;
+ 
 
         }
     }
@@ -399,19 +438,23 @@ void keyboard_post_init_user(void) {
   user_config.raw = eeconfig_read_user();
   
   set_single_persistent_default_layer(_BASE);
-  // Locks the default alpha layer
+  // unlock all "alpha" layers, lock chosen one in switch statement
+  layer_lock_off(_COLEMAK_DH);
+  layer_lock_off(_COLEMAK);
+  layer_lock_off(_QWERTY);
+
   switch (user_config.locked_alpha_layer) {
+    case _COLEMAK_DH:
+        layer_lock_on(_COLEMAK_DH);
+        break;
     case _COLEMAK:
         layer_lock_on(_COLEMAK);
-        layer_lock_off(_QWERTY);
         break;
     case _QWERTY:
         layer_lock_on(_QWERTY);
-        layer_lock_off(_COLEMAK);
         break;
     default:
-        layer_lock_on(_COLEMAK);
-        layer_lock_off(_QWERTY);
+        layer_lock_on(_COLEMAK_DH);
         break;
   }
 }
@@ -419,7 +462,7 @@ void keyboard_post_init_user(void) {
 // set eeprom default values
 void eeconfig_init_user(void) {  // EEPROM is getting reset!
     user_config.raw = 0;
-    user_config.locked_alpha_layer = _COLEMAK;
+    user_config.locked_alpha_layer = _COLEMAK_DH;
     eeconfig_update_user(user_config.raw); // Write default value to EEPROM now
 }
 
@@ -427,4 +470,25 @@ void eeconfig_init_user(void) {  // EEPROM is getting reset!
 bool is_apple_os(void){
     // check if we're set up for macos/ios or another OS
     return keymap_config.swap_lctl_lgui == false; // MacOS
+}
+
+ 
+void type_os_and_layout(void) {
+    if (is_apple_os()) {
+        SEND_STRING("OS: macOS");
+    } else {
+        SEND_STRING("OS: Windows/Linux");
+    }
+
+    SEND_STRING(" | Layout: ");
+    user_config.raw = eeconfig_read_user();
+    if (user_config.locked_alpha_layer == _COLEMAK) {
+        SEND_STRING("Colemak");
+    } else if (user_config.locked_alpha_layer == _COLEMAK_DH) {
+        SEND_STRING("Colemak-DH");
+    } else if (user_config.locked_alpha_layer == _QWERTY) {
+        SEND_STRING("QWERTY");
+    } else {
+        SEND_STRING("Unknown");
+    }
 }
