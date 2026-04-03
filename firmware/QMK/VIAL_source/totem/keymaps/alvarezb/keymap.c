@@ -406,15 +406,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // longer tapping term for pinkies
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    // custom tapping term overrides
-    switch (keycode) {
-        case LCTL_T(KC_A): // left pinky
-            return TAPPING_TERM + 50;
-        case LCTL_T(KC_P): // right pinky
-            return TAPPING_TERM + 30;
-        default:
-            return TAPPING_TERM;
-    }
+    return TAPPING_TERM;
 }
 
 // handle macos vs windows/linux

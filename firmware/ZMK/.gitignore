@@ -1,0 +1,12 @@
+# West workspace dependencies — downloaded locally, not committed
+.west/
+zmk/
+zephyr/
+modules/
+tools/
+bootloader/
+build/
+zmk-helpers/
+
+# Local build artifacts
+*.uf2.bak
