@@ -13,4 +13,4 @@ manifest:
       remote: urob
       revision: main
   self:
-    path: config
+    path: firmware/ZMK/config
