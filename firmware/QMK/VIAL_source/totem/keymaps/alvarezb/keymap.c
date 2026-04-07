@@ -80,7 +80,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │         │         │         │         │         ││         │         │         │         │         │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │   ' "   │         │         │         │         │         ││         │         │   , <   │   . >   │   / ?   │   - _   │
+      │  shift  │         │         │         │         │         ││         │         │   , <   │   . >   │   / ?   │   - _   │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │   ESC   │   TAB   │  SPACE  ││  SPACE  │  ENTER  │  BSPC   │  (tap)
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -90,7 +90,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_BASE] = LAYOUT(
                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_SCLN,
                  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-        KC_QUOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
+        KC_LSFT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, KC_COMM, KC_DOT,  KC_SLSH, KC_MINS,
 
         LT(_RAISE,KC_ESC), LT(_LOWER,KC_TAB), LGUI_T(KC_SPC),    LSFT_T(KC_SPC), LCTL_T(KC_ENT), LALT_T(KC_BSPC)
     ),
@@ -200,7 +200,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │  CTRL   │   ALT   │   CMD   │  SHIFT  │   ` ~   ││   ' "   │    ▼    │    ▼    │    ▼    │    ▼    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │ SHOW OS │    ▼    │   CUT   │  COPY   │  PASTE  │   - _   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    ▼    │
+      │ SHOW OS │    ▼    │    ▼    │    ▼    │    ▼    │   - _   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    ▼    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -208,9 +208,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                   └─────────┴─────────┴─────────┘└─────────┴─────────┴─────────┘ */
 
     [_RAISE] = LAYOUT(
-                 KC_EXLM,  KC_AT,      KC_HASH,    KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  KC_BSLS, LSFT(KC_BSLS),
-                 KC_LCTL,  KC_LALT,    KC_LGUI,    KC_LSFT,    KC_GRV,     KC_QUOT, _______,   _______,  _______,    _______,
-        OS_LAYOUT,_______, LGUI(KC_X), LGUI(KC_C), LGUI(KC_V), KC_MINS,    KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      _______,
+                 KC_EXLM,  KC_AT,   KC_HASH, KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  KC_BSLS, LSFT(KC_BSLS),
+                 KC_LCTL,  KC_LALT, KC_LGUI, KC_LSFT,    KC_GRV,     KC_QUOT, _______,   _______,  _______,    _______,
+        OS_LAYOUT,_______, _______, _______, _______,    KC_MINS,    KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      _______,
                                   _______,LT(_ADJUST, _______), _______,   _______, LT(_ADJUST, _______),KC_DEL
     ),
     /*
