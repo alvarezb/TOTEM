@@ -200,7 +200,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 ├─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┤
                 │  CTRL   │   ALT   │   CMD   │  SHIFT  │   ` ~   ││   ' "   │    ▼    │    ▼    │    ▼    │    ▼    │
       ┌─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┐
-      │ SHOW OS │    ▼    │    ▼    │    ▼    │    ▼    │   - _   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    ▼    │
+      │ SHOW OS │    ▼    │    ▼    │  ENTER  │   BSPC  │   - _   ││ VOL DWN │ VOL UP  │SKIP BACK│ PLAY/PAU│SKIP FORW│    ▼    │
       └─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┼─────────┴─────────┴─────────┘
                                     │    ▼    │    ▼    │    ▼    ││    ▼    │    ▼    │    ▼    │
                                     ├─────────┼─────────┼─────────┤├─────────┼─────────┼─────────┤
@@ -210,7 +210,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RAISE] = LAYOUT(
                  KC_EXLM,  KC_AT,   KC_HASH, KC_DLR,     KC_PERC,    KC_CIRC, KC_AMPR,   KC_PAST,  KC_BSLS, LSFT(KC_BSLS),
                  KC_LCTL,  KC_LALT, KC_LGUI, KC_LSFT,    KC_GRV,     KC_QUOT, _______,   _______,  _______,    _______,
-        OS_LAYOUT,_______, _______, _______, _______,    KC_MINS,    KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      _______,
+        OS_LAYOUT,_______, _______, KC_ENT,  KC_BSPC,    KC_MINS,    KC_VOLD, KC_VOLU,   KC_MPRV,  KC_MPLY,    KC_MNXT,      _______,
                                   _______,LT(_ADJUST, _______), _______,   _______, LT(_ADJUST, _______),KC_DEL
     ),
     /*
