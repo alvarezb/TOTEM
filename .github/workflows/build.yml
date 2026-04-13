@@ -1,0 +1,44 @@
+name: Build ZMK firmware
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: zmkfirmware/zmk-build-arm:stable
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - board: seeeduino_xiao_ble
+            shield: totem_left
+          - board: seeeduino_xiao_ble
+            shield: totem_right
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: West Init
+        working-directory: firmware/ZMK
+        run: west init -l config
+
+      - name: West Update
+        working-directory: firmware/ZMK
+        run: west update --fetch-opt=--filter=tree:0
+
+      - name: West Zephyr export
+        working-directory: firmware/ZMK
+        run: west zephyr-export
+
+      - name: Build (${{ matrix.shield }})
+        working-directory: firmware/ZMK
+        run: |
+          west build -s zmk/app \
+            -b "${{ matrix.board }}" \
+            -- -DSHIELD="${{ matrix.shield }}" \
+            -DZMK_CONFIG="${GITHUB_WORKSPACE}/firmware/ZMK/config"
+
+      - name: Upload (${{ matrix.shield }})
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.shield }}-zmk
+          path: firmware/ZMK/build/zephyr/zmk.uf2
