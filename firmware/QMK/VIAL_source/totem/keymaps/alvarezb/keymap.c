@@ -404,16 +404,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-// longer tapping term for pinkies
-uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
-    // custom tapping term overrides
+// Immediately resolve LSFT_T(KC_SPC) as shift when another key is pressed.
+// Flow Tap (FLOW_TAP_TERM) handles the fast-typing protection side.
+bool get_hold_on_other_key_press(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LCTL_T(KC_A): // left pinky
-            return TAPPING_TERM + 50;
-        case LCTL_T(KC_P): // right pinky
-            return TAPPING_TERM + 30;
+        case LSFT_T(KC_SPC):
+            return true;
         default:
-            return TAPPING_TERM;
+            return false;
     }
 }
 
